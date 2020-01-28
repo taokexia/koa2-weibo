@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-01-22 16:22:47
- * @LastEditTime : 2020-01-28 19:21:20
+ * @LastEditTime : 2020-01-29 00:10:04
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \koa2-weibo-code\src\app.js
@@ -14,6 +14,10 @@ const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const jwtkoa = require('koa-jwt')
+const session = require('koa-generic-session')
+const redisStore = require('koa-redis')
+
+const { REDIS_CONF } = require('./conf/db')
 
 const index = require('./routes/index')
 const users = require('./routes/users')
@@ -41,6 +45,23 @@ app.use(require('koa-static')(__dirname + '/public'))
 app.use(views(__dirname + '/views', {
   extension: 'ejs'
 }))
+
+// session 配置
+app.keys = ['UISDF_7878#$']
+app.use(session({
+  key: 'weibo.sid', // cookie name,默认 'koa.sid'
+  prefix: 'weibo:sess:', // redis key 前缀，默认 `koa:sess:`
+  cookie: {
+    path: '/',
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000
+  },
+  // ttl: 24 * 60 * 60 * 1000, 默认等于 cookie maxAge
+  store: redisStore({
+    all: `${REDIS_CONF.host}:${REDIS_CONF.port}`
+  })
+}))
+
 
 // logger
 app.use(async (ctx, next) => {
