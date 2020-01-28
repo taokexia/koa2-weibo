@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-01-22 16:22:47
+ * @LastEditTime: 2020-01-28 16:32:02
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: \koa2-weibo-code\src\app.js
+ */
 const Koa = require('koa')
 const app = new Koa()
 const views = require('koa-views')
@@ -39,6 +47,6 @@ app.use(users.routes(), users.allowedMethods())
 // error-handling
 app.on('error', (err, ctx) => {
   console.error('server error', err, ctx)
-});
+})
 
 module.exports = app
