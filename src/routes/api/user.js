@@ -1,7 +1,7 @@
 /*
  * @Author: taokexia
  * @Date: 2020-01-29 13:19:53
- * @LastEditTime : 2020-01-29 23:41:53
+ * @LastEditTime : 2020-01-30 00:32:03
  * @LastEditors  : Please set LastEditors
  * @Description: user API 路由
  * @FilePath: \koa2-weibo-code\src\routes\api\user.js
@@ -9,6 +9,7 @@
 
 const router = require('koa-router')()
 const { isExist, register } = require('../../controller/user')
+const userValidate = require('../../validator/user')
 
 router.prefix('/api/user')
 

@@ -1,7 +1,7 @@
 /*
  * @Author: taokexia
  * @Date: 2020-01-29 22:20:51
- * @LastEditTime : 2020-01-29 23:33:25
+ * @LastEditTime : 2020-01-30 00:38:52
  * @LastEditors  : Please set LastEditors
  * @Description: 失败信息集合, 包括 errno 和 message
  * @FilePath: \koa2-weibo-code\src\model\ErrorInfo.js
@@ -37,5 +37,45 @@ module.exports = {
   changePasswordFailInfo: {
     errno: 10006,
     message: '修改密码失败, 请重试'
-  } 
+  },
+  // 上传文件过大
+  uploadFileSizeFailInfo: {
+    errno: 10007,
+    message: '上传文件尺寸过大'
+  },
+  // 修改基本信息失败
+  changeInfoFailInfo: {
+    errno: 10008,
+    message: '修改基本信息失败'
+  },
+  // json schema 校验失败
+  jsonSchemaFileInfo: {
+    errno: 10009,
+    message: '数据格式校验错误'
+  },
+  // 删除用户失败
+  deleteUserFailInfo: {
+    errno: 10010,
+    message: '删除用户失败'
+  },
+  // 添加关注失败
+  addFollowerFailInfo: {
+    errno: 10011,
+    message: '添加关注失败'
+  },
+  // 取消关注失败
+  deleteFollowerFailInfo: {
+    errno: 10012,
+    message: '取消关注失败'
+  },
+  // 创建微博失败
+  createBlogFailInfo: {
+    errno: 11001,
+    message: '创建微博失败，请重试'
+  },
+  // 删除微博失败
+  deleteBlogFailInfo: {
+    errno: 11002,
+    message: '删除微博失败，请重试'
+  }
 }
