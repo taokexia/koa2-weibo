@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-01-22 16:22:47
- * @LastEditTime : 2020-01-29 00:10:04
+ * @LastEditTime : 2020-01-29 13:22:25
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \koa2-weibo-code\src\app.js
@@ -20,7 +20,8 @@ const redisStore = require('koa-redis')
 const { REDIS_CONF } = require('./conf/db')
 
 const index = require('./routes/index')
-const users = require('./routes/users')
+const userViewRouter = require('./routes/view/user')
+const userAPIRouter = require('./routes/api/user')
 const errorViewRouter = require('./routes/view/error')
 
 const { isProd } = require('./utils/env')
@@ -73,7 +74,8 @@ app.use(async (ctx, next) => {
 
 // routes
 app.use(index.routes(), index.allowedMethods())
-app.use(users.routes(), users.allowedMethods())
+app.use(userViewRouter.routes(), userViewRouter.allowedMethods())
+app.use(userAPIRouter.routes(), userAPIRouter.allowedMethods())
 app.use(errorViewRouter.routes(), errorViewRouter.allowedMethods()) // 404 路由注册最下面
 
 // error-handling
