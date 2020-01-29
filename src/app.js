@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-01-22 16:22:47
- * @LastEditTime : 2020-01-29 13:22:25
+ * @LastEditTime : 2020-01-29 23:57:08
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \koa2-weibo-code\src\app.js
@@ -25,6 +25,7 @@ const userAPIRouter = require('./routes/api/user')
 const errorViewRouter = require('./routes/view/error')
 
 const { isProd } = require('./utils/env')
+const { SESSION_SECRET_KEY } = require('./conf/secretKeys')
 // error handler
 // 错误配置项
 let onerrorConf = {}
@@ -48,7 +49,7 @@ app.use(views(__dirname + '/views', {
 }))
 
 // session 配置
-app.keys = ['UISDF_7878#$']
+app.keys = [SESSION_SECRET_KEY]
 app.use(session({
   key: 'weibo.sid', // cookie name,默认 'koa.sid'
   prefix: 'weibo:sess:', // redis key 前缀，默认 `koa:sess:`
