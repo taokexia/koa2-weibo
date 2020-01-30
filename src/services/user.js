@@ -1,7 +1,7 @@
 /*
  * @Author: taokexia
  * @Date: 2020-01-29 14:59:30
- * @LastEditTime : 2020-01-30 23:11:31
+ * @LastEditTime : 2020-01-30 23:34:05
  * @LastEditors  : Please set LastEditors
  * @Description: user service
  * @FilePath: \koa2-weibo-code\src\services\user.js
@@ -27,7 +27,7 @@ async function getUserInfo(userName, password) {
 
   // 查询
   const result = await User.findOne({
-    attributes: ['id', 'userName', 'nickname', 'picture', 'city'],
+    attributes: ['id', 'userName', 'nickName', 'picture', 'city'],
     where: whereOpt
   })
   if (result == null) {
