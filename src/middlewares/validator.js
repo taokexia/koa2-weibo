@@ -1,7 +1,7 @@
 /*
  * @Author: taokexia
  * @Date: 2020-01-30 00:32:29
- * @LastEditTime : 2020-01-30 00:39:41
+ * @LastEditTime : 2020-01-30 00:44:12
  * @LastEditors  : Please set LastEditors
  * @Description: 验证中间件
  * @FilePath: \koa2-weibo-code\src\middlewares\validator.js
@@ -24,10 +24,12 @@ function genValidateor(validateFn) {
     if (error) {
       // 验证失败
       ctx.body =  new ErrorModel(jsonSchemaFileInfo)
+      return
     }
     // 验证成功，继续
     await next()
   }
+  // 返回中间件
   return validator
 }
 
