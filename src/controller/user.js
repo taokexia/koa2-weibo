@@ -1,18 +1,19 @@
 /*
  * @Author: taokexia
  * @Date: 2020-01-29 13:23:17
- * @LastEditTime : 2020-01-30 15:15:54
+ * @LastEditTime : 2020-01-30 23:10:49
  * @LastEditors  : Please set LastEditors
  * @Description: user controller
  * @FilePath: \koa2-weibo-code\src\controller\user.js
  */
 
-const { getUserInfo, createUser } = require('../services/user')
+const { getUserInfo, createUser, deleteUser } = require('../services/user')
 const { SuccessModel, ErrorModel } = require('../model/ResModel')
 const { registerUserNameNotExistInfo,
   registerUserNameExistInfo,
   registerFailInfo,
-  loginFailInfo } = require('../model/ErrorInfo')
+  loginFailInfo,
+  deleteUserFailInfo } = require('../model/ErrorInfo')
 const { doCrypto } = require('../utils/cryp')
 
 /**
@@ -42,7 +43,7 @@ async function register({ userName, password, gender }) {
   const userInfo = await getUserInfo(userName)
   if (userInfo) {
     // 用户名已存在
-    return ErrorModel(registerUserNameExistInfo)
+    return new ErrorModel(registerUserNameExistInfo)
   }
 
   // 注册 service
@@ -81,8 +82,24 @@ async function login(ctx, userName, password) {
   return new SuccessModel()
 }
 
+/**
+ * 删除当前账户
+ * @param {string} userName 
+ */
+async function deleteCurUser(userName) {
+  // service
+  const result = await deleteUser(userName)
+  if (result) {
+    // 成功
+    return new SuccessModel()
+  }
+  // 失败
+  return new ErrorModel(deleteUserFailInfo)
+}
+
 module.exports = {
   isExist,
   register,
-  login
+  login,
+  deleteCurUser
 }
