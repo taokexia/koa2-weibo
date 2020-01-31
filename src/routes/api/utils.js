@@ -1,0 +1,29 @@
+/*
+ * @Author: taokexia
+ * @Date: 2020-01-31 10:29:16
+ * @LastEditTime : 2020-01-31 10:35:25
+ * @LastEditors  : Please set LastEditors
+ * @Description: utils api 路由
+ * @FilePath: \koa2-weibo-code\src\routes\api\utils.js
+ */
+
+const router = require('koa-router')()
+const { loginCheck } = require('../../middlewares/loginChecks')
+const koaForm = require('formidable-upload-koa')
+const { saveFile } = require('../../controller/utils')
+
+router.prefix('/api/utils')
+
+// 上传图片
+router.post('/upload',loginCheck, koaForm(), async (ctx, next) => {
+  const file = ctx.req.files['file']
+  const { size, path, name, type} = file
+  ctx.body = await saveFile({
+    name,
+    type,
+    size,
+    filePath: path
+  })
+})
+
+module.exports = router
