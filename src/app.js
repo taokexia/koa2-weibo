@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-01-22 16:22:47
- * @LastEditTime : 2020-01-31 11:26:06
+ * @LastEditTime : 2020-01-31 23:53:24
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \koa2-weibo-code\src\app.js
@@ -21,7 +21,7 @@ const koaStatic = require('koa-static')
 
 const { REDIS_CONF } = require('./conf/db')
 
-const index = require('./routes/index')
+const blogViewRouter = require('./routes/view/blog')
 const utilsAPIRouter = require('./routes/api/utils')
 const userViewRouter = require('./routes/view/user')
 const userAPIRouter = require('./routes/api/user')
@@ -78,7 +78,7 @@ app.use(async (ctx, next) => {
 })
 
 // routes
-app.use(index.routes(), index.allowedMethods())
+app.use(blogViewRouter.routes(), blogViewRouter.allowedMethods())
 app.use(utilsAPIRouter.routes(), utilsAPIRouter.allowedMethods())
 app.use(userViewRouter.routes(), userViewRouter.allowedMethods())
 app.use(userAPIRouter.routes(), userAPIRouter.allowedMethods())
