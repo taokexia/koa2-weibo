@@ -1,7 +1,7 @@
 /*
  * @Author: taokexia
  * @Date: 2020-02-01 00:23:53
- * @LastEditTime : 2020-02-01 00:32:58
+ * @LastEditTime : 2020-02-01 17:38:35
  * @LastEditors  : Please set LastEditors
  * @Description: 首页test
  * @FilePath: \koa2-weibo-code\test\blog\home.test.js
@@ -17,7 +17,7 @@ let BLOG_ID = ''
 test('创建一条微博，应该成功', async () => {
     // 定义测试内容
     const content = '单元测试自动创建微博_' + Date.now()
-    const image = '/xxx.png'
+    const image = '/1580441267658.1567837337024.3.png'
 
     // 开始测试
     const res = await server
