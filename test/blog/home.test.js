@@ -1,14 +1,14 @@
 /*
  * @Author: taokexia
  * @Date: 2020-02-01 00:23:53
- * @LastEditTime : 2020-02-01 17:38:35
+ * @LastEditTime : 2020-02-02 21:16:36
  * @LastEditors  : Please set LastEditors
  * @Description: 首页test
  * @FilePath: \koa2-weibo-code\test\blog\home.test.js
  */
 
 const server = require('../server')
-const { COOKIE } = require('../testUserInfo')
+const { T_COOKIE } = require('../testUserInfo')
 // const COOKIE = 'weibo.sid=8g5-fA9cP_SqzDKSx-sZiB748IzJ9Vhh; weibo.sid.sig=tWGkTr_rZRfH6eHmt3h04564pD4'
 
 // 存储微博 id
@@ -26,7 +26,7 @@ test('创建一条微博，应该成功', async () => {
             content,
             image
         })
-        .set('cookie', COOKIE)
+        .set('cookie', T_COOKIE)
 
     expect(res.body.errno).toBe(0)
     expect(res.body.data.content).toBe(content)
