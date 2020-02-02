@@ -1,7 +1,7 @@
 /*
  * @Author: taokexia
  * @Date: 2020-01-28 22:48:35
- * @LastEditTime : 2020-01-28 23:49:36
+ * @LastEditTime : 2020-02-02 16:37:02
  * @LastEditors  : Please set LastEditors
  * @Description: 连接 redis 的方法
  * @FilePath: \koa2-weibo-code\src\cache\_redis.js
@@ -57,4 +57,9 @@ function get(key) {
     })
   })
   return promise
+}
+
+module.exports = {
+  get,
+  set
 }
