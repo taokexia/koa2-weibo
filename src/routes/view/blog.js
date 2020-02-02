@@ -1,7 +1,7 @@
 /*
  * @Author: taokexia
  * @Date: 2020-01-31 23:51:08
- * @LastEditTime : 2020-02-02 20:04:44
+ * @LastEditTime : 2020-02-02 20:17:58
  * @LastEditors  : Please set LastEditors
  * @Description: 微博 view 路由
  * @FilePath: \koa2-weibo-code\src\routes\view\blog.js
@@ -9,6 +9,7 @@
 
 const router = require('koa-router')()
 const { loginRedirect } = require('../../middlewares/loginChecks')
+const { isExist } = require('../../controller/user')
 const { getProfileBlogList } = require('../../controller/blog-profile')
 const { getSquareBlogList } = require('../../controller/blog-square')
 const { getFans } = require('../../controller/user-relation')
@@ -55,6 +56,11 @@ router.get('/profile/:userName', loginRedirect, async (ctx, next) => {
   const fansResult = await getFans(curUserInfo.id)
   const { count: fansCount, fansList} = fansResult.data
 
+  // 我是否关注了此人?
+  const amIFollowed = fansList.some(item => {
+    return item.userName === myUserName
+  })
+  
   await ctx.render('profile', {
     blogData: {
       isEmpty,
@@ -69,7 +75,8 @@ router.get('/profile/:userName', loginRedirect, async (ctx, next) => {
       fansData: {
         count: fansCount,
         list: fansList
-      }
+      },
+      amIFollowed
     }
   })
 })

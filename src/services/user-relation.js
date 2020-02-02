@@ -1,7 +1,7 @@
 /*
  * @Author: taokexia
  * @Date: 2020-02-02 19:44:25
- * @LastEditTime : 2020-02-02 19:58:45
+ * @LastEditTime : 2020-02-02 20:34:51
  * @LastEditors  : Please set LastEditors
  * @Description: 用户关系 services
  * @FilePath: \koa2-weibo-code\src\services\user-relation.js
@@ -41,6 +41,36 @@ async function getUsersByFollower(followerId) {
   }
 }
 
+/**
+ * 添加关注关系
+ * @param {number} userId 用户 id
+ * @param {number} followerId 被关注用户id
+ */
+async function addFollower(userId, followerId) {
+  const result = await UserRelation.create({
+    userId,
+    followerId
+  })
+  return result.dataValues
+}
+
+/**
+ * 删除关注关系 
+ * @param {number} userId 用户 id
+ * @param {number} followerId 被关注的用户
+ */
+async function deleteFollower(userId, followerId) {
+  const result = await UserRelation.destroy({
+    where: {
+      userId,
+      followerId
+    }
+  })
+  return result > 0
+}
+
 module.exports = {
-  getUsersByFollower
+  getUsersByFollower,
+  addFollower,
+  deleteFollower
 }
