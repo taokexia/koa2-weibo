@@ -1,7 +1,7 @@
 /*
  * @Author: taokexia
  * @Date: 2020-02-02 15:01:33
- * @LastEditTime : 2020-02-02 16:49:16
+ * @LastEditTime : 2020-02-02 17:04:47
  * @LastEditors  : Please set LastEditors
  * @Description: 广场 api
  * @FilePath: \koa2-weibo-code\src\routes\api\blog-square.js
@@ -17,9 +17,8 @@ router.prefix('/api/square')
 router.get('/loadMore/:pageIndex', loginCheck, async (ctx, next) => {
   let { pageIndex } = ctx.params
   pageIndex = parseInt(pageIndex)
-  const result = await getSquareBlogList(result.data.blogList)
-  console.log(result)
-  ctx.body = result.data
+  const result = await getSquareBlogList(pageIndex)
+  ctx.body = result
 })
 
 module.exports = router
