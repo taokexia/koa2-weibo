@@ -1,7 +1,7 @@
 /*
  * @Author: taokexia
  * @Date: 2020-01-31 23:51:08
- * @LastEditTime : 2020-02-02 20:17:58
+ * @LastEditTime : 2020-02-02 21:12:06
  * @LastEditors  : Please set LastEditors
  * @Description: 微博 view 路由
  * @FilePath: \koa2-weibo-code\src\routes\view\blog.js
@@ -12,7 +12,7 @@ const { loginRedirect } = require('../../middlewares/loginChecks')
 const { isExist } = require('../../controller/user')
 const { getProfileBlogList } = require('../../controller/blog-profile')
 const { getSquareBlogList } = require('../../controller/blog-square')
-const { getFans } = require('../../controller/user-relation')
+const { getFans, getFollowers } = require('../../controller/user-relation')
 
 // 首页
 router.get('/', loginRedirect, async (ctx, next) => {
@@ -56,6 +56,11 @@ router.get('/profile/:userName', loginRedirect, async (ctx, next) => {
   const fansResult = await getFans(curUserInfo.id)
   const { count: fansCount, fansList} = fansResult.data
 
+  // 获取关注人列表
+  // controller
+  const followersResult = await getFollowers(curUserInfo.id)
+  const { count: followersCount, followersList } = followersResult.data
+
   // 我是否关注了此人?
   const amIFollowed = fansList.some(item => {
     return item.userName === myUserName
@@ -76,7 +81,11 @@ router.get('/profile/:userName', loginRedirect, async (ctx, next) => {
         count: fansCount,
         list: fansList
       },
-      amIFollowed
+      amIFollowed,
+      followersData: {
+        count: followersCount,
+        list: followersList
+      }
     }
   })
 })

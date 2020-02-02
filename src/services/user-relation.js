@@ -1,7 +1,7 @@
 /*
  * @Author: taokexia
  * @Date: 2020-02-02 19:44:25
- * @LastEditTime : 2020-02-02 20:34:51
+ * @LastEditTime : 2020-02-02 21:12:42
  * @LastEditors  : Please set LastEditors
  * @Description: 用户关系 services
  * @FilePath: \koa2-weibo-code\src\services\user-relation.js
@@ -42,6 +42,44 @@ async function getUsersByFollower(followerId) {
 }
 
 /**
+ * 获取关注人列表
+ * @param {number} UserId userId
+ */
+async function getFollowersByUser(UserId) {
+  const result = await UserRelation.findAndCountAll({
+    order: [
+      ['id', 'desc']
+    ],
+    include: [
+      {
+        model: User,
+        attributes: ['id', 'userName', 'nickName', 'picture']
+      }
+    ],
+    where: {
+      UserId
+    }
+  })
+  // result.count 总数
+  // result.rows 查询结果，数组
+
+  // 格式化
+  let userList = result.rows.map(row => row.dataValues)
+  userList = userList.map(item => {
+    let user = item.user
+    user = user.dataValues
+    user = formatUser(user)
+    return user
+  })
+  userList = formatUser(userList)
+
+  return {
+    count: result.count,
+    userList
+  }
+}
+
+/**
  * 添加关注关系
  * @param {number} userId 用户 id
  * @param {number} followerId 被关注用户id
@@ -72,5 +110,6 @@ async function deleteFollower(userId, followerId) {
 module.exports = {
   getUsersByFollower,
   addFollower,
-  deleteFollower
+  deleteFollower,
+  getFollowersByUser
 }

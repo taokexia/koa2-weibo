@@ -1,13 +1,13 @@
 /*
  * @Author: taokexia
  * @Date: 2020-02-02 19:43:06
- * @LastEditTime : 2020-02-02 20:33:15
+ * @LastEditTime : 2020-02-02 21:10:01
  * @LastEditors  : Please set LastEditors
  * @Description: 用户关系 controller
  * @FilePath: \koa2-weibo-code\src\controller\user-relation.js
  */
 
-const { getUsersByFollower, addFollower, deleteFollower } = require('../services/user-relation')
+const { getUsersByFollower, getFollowersByUser, addFollower, deleteFollower } = require('../services/user-relation')
 const { SuccessModel, ErrorModel }  = require('../model/ResModel.js')
 const { addFollowerFailInfo, deleteFollowerFailInfo } = require('../model/ErrorInfo')
 /**
@@ -53,8 +53,23 @@ async function unFollow(myUserId, curUserId) {
   return new ErrorModel(deleteFollowerFailInfo)
 }
 
+/**
+ * 获取关注人列表
+ * @param {number} userId userId
+ */
+async function getFollowers(userId) {
+  // service
+  const { count, userList } = await getFollowersByUser(userId)
+
+  return new SuccessModel({
+    count,
+    followersList: userList
+  })
+}
+
 module.exports = {
   getFans,
   follow,
-  unFollow
+  unFollow,
+  getFollowers
 }
