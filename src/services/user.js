@@ -1,7 +1,7 @@
 /*
  * @Author: taokexia
  * @Date: 2020-01-29 14:59:30
- * @LastEditTime : 2020-01-31 12:52:53
+ * @LastEditTime : 2020-02-03 22:20:55
  * @LastEditors  : Please set LastEditors
  * @Description: user service
  * @FilePath: \koa2-weibo-code\src\services\user.js
@@ -9,6 +9,7 @@
 
 const { User } = require('../db/model/index')
 const { formatUser } = require('./_format')
+const { addFollower } = require('../services/user-relation')
 
 /**
  * @description: 获取用户信息
@@ -55,6 +56,11 @@ async function createUser({ userName, password, gender = 3, nickName }) {
     nickName: nickName ? nickName : userName,
     gender
   })
+
+  // 自己关注自己 (为了方便首页获取数据)
+  const data = result.dataValues
+  addFollower(data.id, data.id)
+
   return result.dataValues
 }
 

@@ -1,7 +1,7 @@
 /*
  * @Author: taokexia
  * @Date: 2020-02-02 19:44:25
- * @LastEditTime : 2020-02-02 21:12:42
+ * @LastEditTime : 2020-02-03 22:25:47
  * @LastEditors  : Please set LastEditors
  * @Description: 用户关系 services
  * @FilePath: \koa2-weibo-code\src\services\user-relation.js
@@ -9,6 +9,7 @@
 
 const { User, UserRelation } = require('../db/model/index')
 const { formatUser } = require('./_format')
+const Sequelize = require('sequelize')
 /**
  * 获取关注该用户的用户列表，即该用户的粉丝
  * @param {number} followerId 被关注用户的 id
@@ -23,7 +24,11 @@ async function getUsersByFollower(followerId) {
       {
         model: UserRelation,
         where: {
-          followerId
+          followerId,
+          // 排除自己
+          userId: {
+            [Sequelize.Op.ne]: followerId
+          }
         }
       }
     ]
@@ -57,7 +62,11 @@ async function getFollowersByUser(UserId) {
       }
     ],
     where: {
-      UserId
+      UserId,
+      // 排除自己
+      followerId: {
+        [Sequelize.Op.ne]: UserId
+      }
     }
   })
   // result.count 总数
