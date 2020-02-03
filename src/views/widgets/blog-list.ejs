@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-02-01 15:19:38
- * @LastEditTime : 2020-02-01 17:49:29
+ * @LastEditTime : 2020-02-04 00:07:01
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \koa2-weibo-code\src\views\widgets\blog-list.ejs
@@ -18,7 +18,7 @@
             <a href="/profile/<%= blog.user.userName%>">
                 <%= blog.user.nickName%>
             </a>:
-            <span><%- blog.content%></span>
+            <span><%- blog.contentFormat%></span>
         </div>
         <div class="info">
             <span><%= blog.createdAtFormat %></span>

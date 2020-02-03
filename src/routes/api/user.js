@@ -1,7 +1,7 @@
 /*
  * @Author: taokexia
  * @Date: 2020-01-29 13:19:53
- * @LastEditTime : 2020-01-31 13:16:49
+ * @LastEditTime : 2020-02-04 00:02:25
  * @LastEditors  : Please set LastEditors
  * @Description: user API 路由
  * @FilePath: \koa2-weibo-code\src\routes\api\user.js
@@ -20,6 +20,7 @@ const userValidate = require('../../validator/user')
 const { genValidateor } = require('../../middlewares/validator')
 const { isTest } = require('../../utils/env')
 const { loginCheck } = require('../../middlewares/loginChecks')
+const { getFollowers } = require('../../controller/user-relation')
 
 router.prefix('/api/user')
 
@@ -70,6 +71,19 @@ router.patch('/changePassword', loginCheck, genValidateor(userValidate), async (
 router.post('/logout', loginCheck, async (ctx, next) => {
   // controller
   ctx.body = await logout(ctx)
+})
+
+// 获取 at 列表，即关注人列表
+router.get('/getAtList', loginCheck, async (ctx, next) => {
+  const { id: userId } = ctx.session.userInfo
+  const result = await getFollowers(userId)
+  const { followersList } = result.data
+  
+  // 处理数据
+  const list = followersList.map(user => {
+    return `${user.nickName} - ${user.userName}`
+  })
+  ctx.body = list
 })
 
 module.exports = router
