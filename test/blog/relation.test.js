@@ -1,7 +1,7 @@
 /*
  * @Author: taokexia
  * @Date: 2020-02-02 21:20:09
- * @LastEditTime : 2020-02-02 21:33:41
+ * @LastEditTime : 2020-02-04 00:18:01
  * @LastEditors  : Please set LastEditors
  * @Description: 用户关系 单元测试
  * @FilePath: \koa2-weibo-code\test\blog\relation.test.js
@@ -55,6 +55,18 @@
         return fanInfo.userName === Z_USER_NAME
     })
     expect(count > 0).toBe(true)
+    expect(hasUserName).toBe(true)
+ })
+
+ // 获取 at 列表
+ test('获取 at 列表, 应该有张三', async () => {
+     const res = await server
+        .get('/api/user/getAtList')
+        .set('cookie', T_COOKIE)
+    const atList = res.body
+    const hasUserName = atList.some(item => {
+        return item.indexOf(`- ${Z_USER_NAME}`) > 0
+    })
     expect(hasUserName).toBe(true)
  })
 
